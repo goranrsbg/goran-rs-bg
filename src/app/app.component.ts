@@ -6,5 +6,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  
+  private _visible: boolean;
+  
+  constructor() {
+    this._visible = true;
+  }
+
+  get visible() : boolean {
+    return this._visible;
+  }
+  set visible(val:boolean) {
+    this._visible = val;
+  }
+
 }

@@ -1,0 +1,39 @@
+.gatecontainer {
+    --bgcolor: #999999;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    background-color: var(--bgcolor);
+    border: 2px dotted black;
+    text-align: center;
+    color: yellowgreen;
+    font: italic bold 2em/1.2 monospace;
+}
+#cd {
+    background-color: transparent;
+    font-size: 1.5em;
+    color: inherit;
+    caret-color: black;
+    width: 93%;
+    margin: 0px 0px;
+    display: inline-block;
+    border: 2px solid #cccccc;
+    box-shadow: 3px 5px 13px 7px white inset;
+    border-radius: 7px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 21px;
+    padding-right: 21px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+}
+#cd:focus {
+    box-shadow: 3px 5px 13px 7px yellowgreen inset;
+}
+#fade {
+
+}
