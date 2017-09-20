@@ -25,29 +25,40 @@ export class GateFormComponent implements OnInit {
   }
 
   onEnter() {
-      if(this._code == this._PASSWORD) {
-        this._result = this._code;
-      } else {
-        if(!running) {
-          this.mBox.style.visibility = "visible";
-          console.log("HERE");
-          this._result = "F A L S E";
-          animateOpacity(this.mBox);
-          this._code = "";
-          this.lastCode = "";
-        }
+    if(this._code == this._PASSWORD) {
+      this._result = this._code;
+    } else {
+      if(!running) {
+        this._result = "F A L S E";
+        this.mBox.style.visibility = "visible";
+        animateOpacity(this.mBox);
+        this._code = "";
+        this.lastCode = "";
       }
+    }
   }
 
-  onKey() {
+  onAnyKey() {
     if(this._code.length > this.lastCode.length) {
-      
+      console.log("chech new key: " + this._code.charAt(this._code.length - 1));
       this.lastCode = this._code;
     } else if(this._code.length < this.lastCode.length) {
       this.lastCode = this._code;
     }
   }
 
+  get code(): string {
+    return this._code;
+  }
+  set code(code: string) {
+    this._code = code;
+  }
+  get result(): string {
+    return this._result;
+  }
+  set result(result: string) {
+    this._result = result;
+  }
 }
 
 let running: boolean = false;
