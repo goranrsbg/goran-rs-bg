@@ -1,27 +1,27 @@
 .gatecontainer {
-    --bgcolor: #999999;
-    margin: 0;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
-    background-color: var(--bgcolor);
-    border: 2px dotted black;
+    background-color: transparent;
     text-align: center;
     color: yellowgreen;
-    font: italic bold 2em/1.2 monospace;
+    font-size: 2em;
+    font-family: Aldrich, Verdana, Geneva, Tahoma, sans-serif;
+}
+#cd {
+    -webkit-appearance: none;
+    outline: none;
 }
 #cd {
     background-color: transparent;
+    font: inherit;
     font-size: 1.5em;
     color: inherit;
     caret-color: black;
-    width: 93%;
     margin: 0px 0px;
     display: inline-block;
     border: 2px solid #cccccc;
-    box-shadow: 3px 5px 13px 7px white inset;
     border-radius: 7px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -32,8 +32,12 @@
     padding-bottom: 13px;
 }
 #cd:focus {
-    box-shadow: 3px 5px 13px 7px yellowgreen inset;
+    border-color: yellowgreen;
 }
-#fade {
-
+#message {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    cursor: default;
 }

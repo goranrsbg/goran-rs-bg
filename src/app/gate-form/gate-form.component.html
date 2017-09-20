@@ -1,5 +1,6 @@
 <div class="gatecontainer">
-    {{ text }}
-    <div><input [(ngModel)]="code" id="cd" type="text" (keyup.enter)="onEnter()" autofocus required placeholder="CoDe TiMe" ></div>
-    <div><strong>CODE:</strong> <span id="fade">{{ result }}</span></div>
+    <div>
+        <input [(ngModel)]="code" id="cd" type="text" (keyup.enter)="onEnter()" (keyup)="onKey()" autofocus required placeholder="CODE TIME" >
+    </div>
+    <div id="message">{{ result }}</div>
 </div>
