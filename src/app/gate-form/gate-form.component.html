@@ -1,6 +1,6 @@
 <div class="gatecontainer">
     <div>
-        <input [(ngModel)]="code" id="cd" type="text" (keyup.enter)="onEnter()" (keyup)="onAnyKey()" autofocus required placeholder="CODE TIME" size="12" maxlength="12" >
+        <input [(ngModel)]="code" id="cd" type="text" (keyup.enter)="onEnter()" (keyup)="onAnyKey()" autofocus required placeholder="  CODE TIME" size="12" maxlength="12" >
     </div>
-    <div id="message">{{ result }}</div>
+    <div id="messageBox" style="opacity: 1.0;"><span style="opacity: 1.0;" *ngFor="let c of result.split('')">{{c}}</span></div>
 </div>
