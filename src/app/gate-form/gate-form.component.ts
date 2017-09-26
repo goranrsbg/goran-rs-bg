@@ -1,48 +1,56 @@
 import { Component, OnInit } from '@angular/core';
-import { Animate } from './../lib/lib';
+import { Animation, Letter } from './../lib/lib';
 
 @Component({
-  selector: '.gateform',
+  selector: 'gate-form',
   templateUrl: './gate-form.component.html',
   styleUrls: ['./gate-form.component.css']
 })
 export class GateFormComponent implements OnInit {
-
-  private _PASSWORD: string = "GaMeTiMe";
+  
+  private _PASSWORD: string;
+  private _displayMessage: string;
   private _lastCode: string;
   private _code: string;
-  private _result: string;
-  private _mBox: HTMLElement;
+
+  private _false_synonyms: string[] = [	"false", "incorrect", "untrue", "wrong", "erroneous", "fallacious", "faulty", "flawed", "distorted", "inaccurate", "inexact", "imprecise", "invalid", "unfounded", "untruthful", "fictitious", "unreal", "counterfeit", "forged", "fraudulent", "spurious", "misleading", "deceptive" ];
+  
+  private _message: Letter[];
+  private _nextAnimationSide: number;
 
   constructor() {
+    this._message = new Array<Letter>();
+    this._PASSWORD = "GaMe TiMe";
     this._lastCode = "";
     this._code = "";
-    this._result = "message box";
+    this._nextAnimationSide = 0;
   }
-
-  ngOnInit() {
-    this._mBox = document.getElementById("messageBox");
+  
+  ngOnInit() { 
+    this.createMessage("message box");
   }
 
   onEnter() {
-    if(this._code == this._PASSWORD) {
-      this._result = this._code;
-    } else {
-      this._result = "F A L S E";
-      new Animate(this._mBox, 100, 10, 0);
-      Animate.startAnimations();
+    if(this.code === this._PASSWORD) {
+      console.log("Connected.");
+      this._code = "";
+      this._lastCode = "";
+    } else if(this.code.length > 0) {
+      this.createMessage(this._false_synonyms[Math.floor(Math.random() * this._false_synonyms.length)]);
       this._code = "";
       this._lastCode = "";
     }
   }
-
-  onAnyKey() {
-    if(this._code.length > this._lastCode.length) {
-      // TODO check new characters
-      this._lastCode = this._code;
-    } else if(this._code.length < this._lastCode.length) {
-      // stay cool on deletion
-      this._lastCode = this._code;
+  
+  private createMessage(text: string) {
+    if(Animation.isRunning())
+      Animation.stopAnimations();
+    this._message.length = 0;
+    Letter.side = this._nextAnimationSide;
+    Letter.lastPosition = text.length - 1;
+    this._nextAnimationSide = (this._nextAnimationSide + 1) % 4;
+    for(let i = 0; i < text.length; i++) {
+      this._message.push(new Letter(text.charAt(i), i));
     }
   }
 
@@ -52,10 +60,7 @@ export class GateFormComponent implements OnInit {
   set code(code: string) {
     this._code = code;
   }
-  get result(): string {
-    return this._result;
-  }
-  set result(result: string) {
-    this._result = result;
+  get message(): Letter[] {
+    return this._message;
   }
 }

@@ -1,44 +1,35 @@
-.gatecontainer {
+.input-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: transparent;
-    text-align: center;
-    color: yellowgreen;
-    font-size: 2em;
     font-family: Aldrich, Verdana, Geneva, Tahoma, sans-serif;
+    color: yellowgreen;
 }
-#cd {
+#input-code {
     -webkit-appearance: none;
     outline: none;
 }
-#cd {
-    background-color: transparent;
-    font: inherit;
-    font-size: 1.5em;
-    color: inherit;
+#input-code {
     caret-color: black;
+    font-family: inherit;
+    font-size: 2em;
+    color: inherit;
+    background-color: inherit;
     margin: 0px 0px;
-    display: inline-block;
+    padding: 13px 21px 13px 21px;
     border: 2px solid #cccccc;
     border-radius: 7px;
+    display: inline-block;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding-left: 21px;
-    padding-right: 21px;
-    padding-top: 13px;
-    padding-bottom: 13px;
 }
-#cd:focus {
+#input-code:focus {
     border-color: yellowgreen;
 }
-#messageBox {
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    cursor: default;
-    visibility: visible;
+#message {
+    font-size: 1.5em;
+    text-align: center;
 }

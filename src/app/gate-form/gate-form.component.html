@@ -1,6 +1,7 @@
-<div class="gatecontainer">
-    <div>
-        <input [(ngModel)]="code" id="cd" type="text" (keyup.enter)="onEnter()" (keyup)="onAnyKey()" autofocus required placeholder="  CODE TIME" size="12" maxlength="12" >
-    </div>
-    <div id="messageBox" style="opacity: 1.0;"><span style="opacity: 1.0;" *ngFor="let c of result.split('')">{{c}}</span></div>
+<div class="input-container">
+  <input  [(ngModel)]="code" id="input-code" type="text" (keyup.enter)="onEnter()" onfocus="this.select();" 
+   autofocus required placeholder="CODE TIME" size="12" maxlength="12">
+  <div id="message">
+    <letter-box *ngFor="let c of message" [char]="c"></letter-box>
+  </div>
 </div>

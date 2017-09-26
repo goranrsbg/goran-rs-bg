@@ -4,11 +4,13 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { GateFormComponent } from './gate-form/gate-form.component';
+import { LetterBoxComponent } from './letter-box/letter-box.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GateFormComponent
+    GateFormComponent,
+    LetterBoxComponent,
   ],
   imports: [
     BrowserModule,
