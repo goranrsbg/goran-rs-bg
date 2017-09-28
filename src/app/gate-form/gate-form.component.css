@@ -5,11 +5,14 @@
     transform: translate(-50%, -50%);
     background-color: transparent;
     font-family: Aldrich, Verdana, Geneva, Tahoma, sans-serif;
-    color: yellowgreen;
+    color: var(--color, yellowgreen);
 }
 #input-code {
     -webkit-appearance: none;
     outline: none;
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+    transition: 0.2s;
 }
 #input-code {
     caret-color: black;
@@ -26,8 +29,21 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+#input-code {
+    --x-pos: calc(var(--x) * 1px);
+    --y-pos: calc(var(--y) * 1px);
+    box-shadow: var(--x-pos, 17px) var(--y-pos , 17px) 17px var(--color-shadow, darkslategray);
+}
 #input-code:focus {
-    border-color: yellowgreen;
+    border-color: var(--color);
+}
+#input-code:hover {
+    background: black;
+    caret-color: white;
+    box-shadow: none;
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    transition: 1s;
 }
 #message {
     font-size: 1.5em;

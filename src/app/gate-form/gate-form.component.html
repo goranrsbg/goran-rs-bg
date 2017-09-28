@@ -1,6 +1,16 @@
-<div class="input-container">
-  <input  [(ngModel)]="code" id="input-code" type="text" (keyup.enter)="onEnter()" onfocus="this.select();" 
-   autofocus required placeholder="CODE TIME" size="12" maxlength="12">
+<div class="input-container" style="--color:yellowgreen" (click)="onClick($event)">
+  <input  [(ngModel)]="code" 
+           id="input-code" 
+           type="text" 
+           style="--x:10;--y:10" 
+           (keyup.enter)="onEnter()" 
+           onfocus="this.select()"
+           (window:mousemove)="onMouseMove($event)" 
+           autofocus 
+           required placeholder="CODE TIME" 
+           size="12" 
+           maxlength="12" 
+           #ic>
   <div id="message">
     <letter-box *ngFor="let c of message" [char]="c"></letter-box>
   </div>
