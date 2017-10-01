@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Animation, Letter, Color } from './../lib/lib';
 
 @Component({
-  selector: 'gate-form',
   templateUrl: './gate-form.component.html',
   styleUrls: ['./gate-form.component.css']
 })

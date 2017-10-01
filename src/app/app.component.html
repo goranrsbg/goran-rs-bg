@@ -1,12 +1,1 @@
-<!--The content below is only a placeholder and can be replaced.-->
-
-<div *ngIf="visible; then gate else main"></div>
-
-<ng-template #gate>
-    <gate-form></gate-form>
-</ng-template>
-
-<ng-template #main>
-    <h1>This is main.</h1>
-</ng-template>
-
+<router-outlet></router-outlet>

@@ -38,8 +38,8 @@
     border-color: var(--color);
 }
 #input-code:hover {
-    background: black;
-    caret-color: white;
+    background: blanchedalmond;
+    caret-color: yellowgreen;
     box-shadow: none;
     -webkit-transition: 1s;
     -moz-transition: 1s;

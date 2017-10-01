@@ -1,5 +1,5 @@
-import { Animation, Letter } from './../lib/lib';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Animation, Letter } from './../lib/lib';
 
 @Component({
   selector: 'letter-box',
