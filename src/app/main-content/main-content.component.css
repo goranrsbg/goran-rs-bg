@@ -3,7 +3,8 @@
     margin: 0;
     padding: 0;
     text-align: center;
-    border: 1px dashed black;
+    border: 1px dashed white;
+    font-family: "Oxygen", sans-serif;
 }
 .wrapper {
     display: grid;
@@ -16,7 +17,7 @@ header {
     grid-row: 1;
 }
 nav {
-    grid-column: 2;
+    grid-column: 1 / 4;
     grid-row: 2;
 }
 aside.left {
@@ -34,4 +35,8 @@ article {
 footer {
     grid-column: 1 / 4;
     grid-row: 4;
+    border-top: 2px solid #eeeeee;
+    transform: translateY(50%);
+    font-size: 1em;
+    padding: 13px 0;
 }

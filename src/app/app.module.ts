@@ -1,7 +1,7 @@
-import { MainContentRoutingModule } from './main-content/main-content-routing.module';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -13,6 +13,9 @@ import { CoverLetterComponent } from './cover-letter/cover-letter.component';
 import { CurriculumVitaeComponent } from './curriculum-vitae/curriculum-vitae.component';
 import { CodeSamplesComponent } from './code-samples/code-samples.component';
 import { WellComeComponent } from './well-come/well-come.component';
+
+import { VisitorService } from './visitor.service';
+import { MainGuard } from './main.guard';
 
 @NgModule({
   declarations: [
@@ -28,11 +31,14 @@ import { WellComeComponent } from './well-come/well-come.component';
   ],
   imports: [
     AppRoutingModule,
-    //MainContentRoutingModule,
     BrowserModule,
+    HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    VisitorService,
+    MainGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

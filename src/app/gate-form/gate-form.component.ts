@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Animation, Letter, Color } from './../lib/lib';
+import { Router } from '@angular/router';
+import { VisitorService } from './../visitor.service';
 
 @Component({
   templateUrl: './gate-form.component.html',
@@ -9,9 +11,7 @@ export class GateFormComponent implements OnInit {
   
   @ViewChild("ic") ic;
   
-  private _PASSWORD: string;
   private _displayMessage: string;
-  private _lastCode: string;
   private _code: string;
   private _color: Color;
 
@@ -20,10 +20,8 @@ export class GateFormComponent implements OnInit {
   private _message: Letter[];
   private _nextAnimationSide: number;
 
-  constructor() {
+  constructor(private router: Router, private visitor: VisitorService) {
     this._message = new Array<Letter>();
-    this._PASSWORD = "GaMe TiMe";
-    this._lastCode = "";
     this._code = "";
     this._color = new Color();
     this._nextAnimationSide = 0;
@@ -34,14 +32,20 @@ export class GateFormComponent implements OnInit {
   }
 
   onEnter() {
-    if(this.code === this._PASSWORD) {
-      this.createMessage("Connected.");
+    if(this.code.length > 0) {
+      this.createMessage("Verification...");
+      this.visitor.logIn(this.code).subscribe(() => {
+        if(this.visitor.isValid) {
+          this.createMessage("Connected.");
+          let url = this.visitor.redirectUrl ? this.visitor.redirectUrl : "main";
+          setTimeout(() => {
+            this.router.navigate([url]);
+          }, 2000);
+        } else {
+          this.createMessage(this._false_synonyms[Math.floor(Math.random() * this._false_synonyms.length)]);
+        }
+      });
       this._code = "";
-      this._lastCode = "";
-    } else if(this.code.length > 0) {
-      this.createMessage(this._false_synonyms[Math.floor(Math.random() * this._false_synonyms.length)]);
-      this._code = "";
-      this._lastCode = "";
     }
   }
   
@@ -62,9 +66,7 @@ export class GateFormComponent implements OnInit {
 
     x = w * (midx - event.x) / midx;
     y = h * (midy - event.y) / midy;
-    
-    //console.log(event.x + " < x - y > " + event.y + " | O= " + x + " " + y);
-    
+
     e.style.setProperty("--x", ""+x);
     e.style.setProperty("--y", ""+y);
   }
