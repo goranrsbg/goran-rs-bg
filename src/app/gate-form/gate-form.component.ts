@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Animation, Letter, Color } from './../lib/lib';
 import { Router } from '@angular/router';
 import { VisitorService } from './../visitor.service';
@@ -7,13 +7,18 @@ import { VisitorService } from './../visitor.service';
   templateUrl: './gate-form.component.html',
   styleUrls: ['./gate-form.component.css']
 })
-export class GateFormComponent implements OnInit {
+export class GateFormComponent implements OnInit, AfterViewInit {
+  ngAfterViewInit(): void {
+    console.log();
+  }
   
-  @ViewChild("ic") ic;
+  @ViewChild("inp") inp;
+  @ViewChild("cnt") cnt;
   
   private _displayMessage: string;
   private _code: string;
   private _color: Color;
+  private _inputDisabled: boolean;
 
   private _false_synonyms: string[] = [	"false", "incorrect", "untrue", "wrong", "erroneous", "fallacious", "faulty", "flawed", "distorted", "inaccurate", "inexact", "imprecise", "invalid", "unfounded", "untruthful", "fictitious", "unreal", "counterfeit", "forged", "fraudulent", "spurious", "misleading", "deceptive" ];
   
@@ -24,6 +29,7 @@ export class GateFormComponent implements OnInit {
     this._message = new Array<Letter>();
     this._code = "";
     this._color = new Color();
+    this._inputDisabled = false;
     this._nextAnimationSide = 0;
   }
   
@@ -31,8 +37,10 @@ export class GateFormComponent implements OnInit {
     this.createMessage("message box");
   }
 
-  onEnter() {
+  onSubmit() {
     if(this.code.length > 0) {
+      let e: HTMLElement = <HTMLElement>this.inp.nativeElement;
+      this.inputDisabled = true;
       this.createMessage("Verification...");
       this.visitor.logIn(this.code).subscribe(() => {
         if(this.visitor.isValid) {
@@ -43,19 +51,22 @@ export class GateFormComponent implements OnInit {
           }, 2000);
         } else {
           this.createMessage(this._false_synonyms[Math.floor(Math.random() * this._false_synonyms.length)]);
+          this.inputDisabled = false;
         }
+        this._code = "";
       });
-      this._code = "";
     }
   }
   
-  onClick(event: MouseEvent) {
-    (<HTMLElement>event.target).parentElement.style.setProperty("--color", "rgba"+this.color.generateRandomColor().toString());
-    (<HTMLElement>event.target).parentElement.style.setProperty("--color-shadow", "rgba"+this.color.generateRandomColor().toString());
+  onClick() {
+    let inp: HTMLElement = <HTMLElement>this.inp.nativeElement;
+    let cnt: HTMLElement = <HTMLElement>this.cnt.nativeElement;
+    cnt.style.setProperty("--color", "rgba"+this.color.generateRandomColor().toString());
+    inp.style.setProperty("--color-shadow", "rgba"+this.color.generateRandomColor().toString());
   }
 
   onMouseMove(event: MouseEvent) {
-    let e: HTMLElement = <HTMLElement>this.ic.nativeElement;
+    let e: HTMLElement = <HTMLElement>this.inp.nativeElement;
     let box = e.getBoundingClientRect(); 
     let x: number;
     let y: number;
@@ -91,6 +102,12 @@ export class GateFormComponent implements OnInit {
   }
   get message(): Letter[] {
     return this._message;
+  }
+  get inputDisabled():boolean {
+    return this._inputDisabled;
+  }
+  set inputDisabled(val: boolean) {
+    this._inputDisabled = val;
   }
   get color(): Color {
     return this._color;

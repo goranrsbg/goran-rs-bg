@@ -95,3 +95,8 @@ export class Color {
     return "("+this._red+","+this._green+","+this._blue+","+this._opacity+")";
   }
 }
+
+export interface Data {
+    name: string;
+    askAndLearn: string;
+}

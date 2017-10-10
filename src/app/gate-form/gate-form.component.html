@@ -1,16 +1,22 @@
-<div class="input-container" style="--color:yellowgreen" (click)="onClick($event)">
-  <input  [(ngModel)]="code" 
-           id="input-code" 
-           type="text" 
-           style="--x:10;--y:33" 
-           (keyup.enter)="onEnter()" 
-           onfocus="this.select()"
-           (window:mousemove)="onMouseMove($event)" 
-           autofocus 
-           required placeholder="CODE TIME" 
-           size="12" 
-           maxlength="12" 
-           #ic>
+<div class="input-container" style="--color:yellowgreen" #cnt>
+  <form (ngSubmit)="onSubmit()" autocomplete="off" #frm>
+    <input  [(ngModel)]="code" 
+            [ngModelOptions]="{standalone: true}"
+            (click)="onClick()"
+            autocomplete="off"
+            [disabled]="inputDisabled"
+            id="input-code" 
+            type="text" 
+            style="--x:11;--y:37" 
+            onfocus="this.select()"
+            (window:mousemove)="onMouseMove($event)" 
+            autofocus 
+            required 
+            placeholder="CODE TIME" 
+            size="12" 
+            maxlength="12" 
+            #inp>
+  </form>
   <div id="message">
     <letter-box *ngFor="let c of message" [char]="c"></letter-box>
   </div>
