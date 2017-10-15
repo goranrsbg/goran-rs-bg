@@ -8,7 +8,7 @@ import { GateFormComponent } from './gate-form/gate-form.component';
 import { PageNotFoundComponent } from './not-found/not-found.component';
 import { MainContentComponent } from './main-content/main-content.component';
 
-import { MainGuard } from './main.guard';
+import { MainGuard } from './guards/main.guard';
 
 const routes: Routes = [
     {

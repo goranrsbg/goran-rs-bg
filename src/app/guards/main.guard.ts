@@ -1,4 +1,4 @@
-import { VisitorService } from './visitor.service';
+import { VisitorService } from './../services/visitor.service';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanLoad, Route } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -17,7 +17,7 @@ export class MainGuard implements CanActivate, CanLoad {
     
     let url: string = state.url;
     
-    console.log("AuthGuard#canActivate called " + this.visitor.isValid);
+    //console.log("AuthGuard#canActivate called " + this.visitor.isValid);
 
     return this.chechLogin(url);
   }

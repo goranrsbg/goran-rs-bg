@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -14,8 +14,9 @@ import { CurriculumVitaeComponent } from './curriculum-vitae/curriculum-vitae.co
 import { CodeSamplesComponent } from './code-samples/code-samples.component';
 import { WellComeComponent } from './well-come/well-come.component';
 
-import { VisitorService } from './visitor.service';
-import { MainGuard } from './main.guard';
+import { VisitorService } from './services/visitor.service';
+import { MainGuard } from './guards/main.guard';
+import { KeyInterceptor } from './interceptor/main-interceptor';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,12 @@ import { MainGuard } from './main.guard';
   ],
   providers: [
     VisitorService,
-    MainGuard
+    MainGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: KeyInterceptor,
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent]
 })

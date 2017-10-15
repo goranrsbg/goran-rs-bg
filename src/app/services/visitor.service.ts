@@ -1,4 +1,4 @@
-import { Data } from './lib/lib';
+import { Data } from './../lib/lib';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -19,10 +19,9 @@ export class VisitorService {
   }
   
   logIn(code: string): Observable<boolean> {
-    let answer: Data;
+    let answer: Data = {name:"none", askAndLearn:"none"};
     this.http.post<Data>(this._url, code).subscribe(v => {
       answer = v;
-      console.log(v);
     }, (err: HttpErrorResponse) => {
       if(err instanceof Error) {
         console.log("An error occurred: ", err.error.message);
@@ -31,7 +30,7 @@ export class VisitorService {
       }
       return Observable.of(this._isValid).delay(2000).do(val => this._isValid = false);
     });
-    return Observable.of(this._isValid).delay(2000).do(val => this._isValid = (answer.name == "Goran Cvijanovic" &&answer.askAndLearn == "codeIsValid"));
+    return Observable.of(this._isValid).delay(2000).do(val => this._isValid = (answer.name == "Skynet" &&answer.askAndLearn == "keyIsValid"));
   }
 
   logOut() {

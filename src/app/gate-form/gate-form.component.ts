@@ -1,17 +1,14 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Animation, Letter, Color } from './../lib/lib';
 import { Router } from '@angular/router';
-import { VisitorService } from './../visitor.service';
+import { VisitorService } from './../services/visitor.service';
 
 @Component({
   templateUrl: './gate-form.component.html',
   styleUrls: ['./gate-form.component.css']
 })
-export class GateFormComponent implements OnInit, AfterViewInit {
-  ngAfterViewInit(): void {
-    console.log();
-  }
-  
+export class GateFormComponent implements OnInit {
+ 
   @ViewChild("inp") inp;
   @ViewChild("cnt") cnt;
   
@@ -50,11 +47,14 @@ export class GateFormComponent implements OnInit, AfterViewInit {
             this.router.navigate([url]);
           }, 2000);
         } else {
-          this.createMessage(this._false_synonyms[Math.floor(Math.random() * this._false_synonyms.length)]);
           this.inputDisabled = false;
+          this.createMessage(this._false_synonyms[Math.floor(Math.random() * this._false_synonyms.length)]);
         }
         this._code = "";
       });
+      setTimeout(() => {
+        e.focus();
+      }, 2000);
     }
   }
   
