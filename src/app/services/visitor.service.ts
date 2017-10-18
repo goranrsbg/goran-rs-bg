@@ -8,29 +8,30 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class VisitorService {
-  
+
   private _isValid: boolean;
   private _redirectUrl: string;
   private _url: string;
-  
-  constructor(private http: HttpClient) { 
+
+  constructor(private http: HttpClient) {
     this._isValid = false;
-    this._url = "http://localhost:8080/eebackend/validate/code";
+    this._url = 'http://localhost:8080/eebackend/validate/code';
   }
-  
+
   logIn(code: string): Observable<boolean> {
-    let answer: Data = {name:"none", askAndLearn:"none"};
+    let answer: Data = {name: 'none', askAndLearn: 'none'};
     this.http.post<Data>(this._url, code).subscribe(v => {
       answer = v;
     }, (err: HttpErrorResponse) => {
-      if(err instanceof Error) {
-        console.log("An error occurred: ", err.error.message);
+      if (err instanceof Error) {
+        console.log('An error occurred: ', err.error.message);
       } else {
         console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
       }
       return Observable.of(this._isValid).delay(2000).do(val => this._isValid = false);
     });
-    return Observable.of(this._isValid).delay(2000).do(val => this._isValid = (answer.name == "Skynet" &&answer.askAndLearn == "keyIsValid"));
+    return Observable.of(this._isValid).delay(2000).do(val => this._isValid = (answer.name === 'Skynet' &&
+    answer.askAndLearn === 'keyIsValid'));
   }
 
   logOut() {

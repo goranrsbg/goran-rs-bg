@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WellComeComponent } from './well-come.component';
+import { WelComeComponent } from './welcome.component';
 
 describe('WellComeComponent', () => {
-  let component: WellComeComponent;
-  let fixture: ComponentFixture<WellComeComponent>;
+  let component: WelComeComponent;
+  let fixture: ComponentFixture<WelComeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WellComeComponent ]
+      declarations: [ WelComeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WellComeComponent);
+    fixture = TestBed.createComponent(WelComeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -12,7 +12,7 @@ import { PageNotFoundComponent } from './not-found/not-found.component';
 import { CoverLetterComponent } from './cover-letter/cover-letter.component';
 import { CurriculumVitaeComponent } from './curriculum-vitae/curriculum-vitae.component';
 import { CodeSamplesComponent } from './code-samples/code-samples.component';
-import { WellComeComponent } from './well-come/well-come.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 import { VisitorService } from './services/visitor.service';
 import { MainGuard } from './guards/main.guard';
@@ -28,7 +28,7 @@ import { KeyInterceptor } from './interceptor/main-interceptor';
     CoverLetterComponent,
     CurriculumVitaeComponent,
     CodeSamplesComponent,
-    WellComeComponent
+    WelcomeComponent
   ],
   imports: [
     AppRoutingModule,

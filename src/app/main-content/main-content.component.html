@@ -1,18 +1,25 @@
 <div class="wrapper">
   <header>
-      <app-well-come></app-well-come>
+    <div>
+      <app-welcome></app-welcome>
+    </div>
   </header>
   <nav>
-    <a routerLink="cover-letter" routerLinkActive="active">Cover letter</a>
-    <a routerLink="CV" routerLinkActive="active">Curriculum vitae</a>
-    <a routerLink="code-samples" routerLinkActive="active">Code samples</a>
+    <div>
+      <a routerLink="cover-letter" routerLinkActive="active">Cover letter</a>
+      <a routerLink="CV" routerLinkActive="active">Curriculum vitae</a>
+      <a routerLink="code-samples" routerLinkActive="active">Code samples</a>
+    </div>
   </nav>
   <aside id="left">Left side</aside>
   <aside id="right">Right side</aside>
   <article>
-    Content:
-    <router-outlet>...</router-outlet>
+    <router-outlet></router-outlet>
   </article>
-  <footer>Rightcopy &forall; Goran Cvijanović</footer>
+  <footer>
+    <div>
+      <span>Rightcopy &forall; Goran Cvijanović</span>
+    </div>
+  </footer>
 </div>
 
