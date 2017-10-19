@@ -1,0 +1,8 @@
+div.container {
+    width: 91%;
+    margin: auto;
+    -webkit-margin-before: 2em;
+    -webkit-margin-after: 2em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}

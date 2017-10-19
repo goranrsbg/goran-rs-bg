@@ -1,3 +1,9 @@
+div.container {
+    margin-top: 2em;
+    -webkit-margin-before: 2em;
+    margin-bottom: 2em;
+    -webkit-margin-after: 2em;
+}
 table#tableTop {
     width: 100%;
     border: none;
@@ -13,6 +19,7 @@ table td.right {
 div#wrapper {
     width: 91%;
     margin: auto;
+    margin-bottom: 1.5em;
 }
 div p {
     text-indent: 23px;
@@ -23,5 +30,4 @@ div span {
     margin-top: 1em;
     margin-bottom: 1em;
     -webkit-margin-before: 1em;
-    -webkit-margin-after: 1em;
 }

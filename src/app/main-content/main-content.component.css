@@ -54,9 +54,8 @@ article {
     text-align: left;
     color: black;
     font-weight: 550;
-    background: url(../../assets/img/wall2.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-color: white;
+    min-height: 800px;
 }
 footer {
     grid-column: 1 / 4;
