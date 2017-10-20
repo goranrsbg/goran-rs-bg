@@ -1,14 +1,20 @@
 <div class="wrapper">
-  <header>
-    <div>
+  <header (click)="onClick()" #hdr>
       <app-welcome></app-welcome>
-    </div>
   </header>
   <nav>
     <div>
-      <a routerLink="cover-letter" routerLinkActive="active">Cover letter</a>
-      <a routerLink="CV" routerLinkActive="active">Curriculum vitae</a>
-      <a routerLink="code-samples" routerLinkActive="active">Code samples</a>
+      <a id="cl" 
+         routerLink="cover-letter" 
+         routerLinkActive="active-link" 
+         [routerLinkActiveOptions]="{exact: true}">Cover letter</a>
+      <a routerLink="CV" 
+         routerLinkActive="active-link" 
+         [routerLinkActiveOptions]="{exact:true}">Curriculum vitae</a>
+      <a id="cs" 
+         routerLink="code-samples" 
+         routerLinkActive="active-link" 
+         [routerLinkActiveOptions]="{exact:true}">Code samples</a>
     </div>
   </nav>
   <aside id="left">Left side</aside>

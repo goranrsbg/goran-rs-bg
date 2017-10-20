@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Color } from '../services/color.service';
 
 @Component({
   selector: 'app-welcome',
@@ -9,13 +10,19 @@ export class WelcomeComponent implements OnInit {
 
   private _message: string;
 
-  constructor() { }
+  constructor(private _color: Color) {
+    this._message = 'WELCOME';
+   }
 
-  ngOnInit() {
-    this._message = 'W E L C O M E';
+  ngOnInit() { }
+
+  onOver(event: any) {
+    (<HTMLElement>event.target).style.setProperty('--angle', '' + Math.random() * 360);
+    (<HTMLElement>event.target).style.color = this._color.generateRandomRbgColor();
   }
 
   get message(): string {
     return this._message;
   }
+
 }

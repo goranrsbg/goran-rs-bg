@@ -14,10 +14,10 @@
 header {
     grid-column: 1 / 4;
     grid-row: 1;
-    background: coral;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: var(--color, yellowgreen);
 }
 nav {
     grid-column: 1 / 4;
@@ -30,15 +30,31 @@ nav {
     justify-content: center;
 }
 nav a {
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    transition: 1s;
     text-decoration: none;
     font-size: 1.21em;
     margin: auto;
     padding: 11px;
-    color: greenyellow;
-    background-color: rgba(138, 138, 138, 0.7);
+    background-color: rgba(255, 255, 255, 0.6);
+    color: red;
+    border: 3px solid red;
 }
 nav a:hover {
+    font-size: 150%;
+}
+#cl {
+    border-radius: 11px 0 0 11px;
+}
+#cs {
+    border-radius: 0 11px 11px 0;
+}
+.active-link {
+    color: black;
     font-weight: bold;
+    background-color: white;
+    border: 3px solid black;
 }
 aside.left {
     grid-column: 1;
@@ -73,9 +89,6 @@ footer {
     justify-content: center;
 }
 footer span {
-    background-color: rgba(138, 138, 138, 0.7);
-    color: greenyellow;
-}
-.active {
-    border: 3px solid coral;; 
+    background-color: rgba(1, 1, 1, 0.4);
+    color: yellowgreen;
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Color } from '../services/color.service';
 
 @Component({
   templateUrl: './main-content.component.html',
@@ -6,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainContentComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('hdr') hdr;
 
-  ngOnInit() {
+  constructor(private _color: Color) { }
+
+  ngOnInit() { }
+
+  onClick() {
+    const hdr: HTMLElement = <HTMLElement>this.hdr.nativeElement;
+    hdr.style.setProperty('--color', this._color.generateRandomRbgColor());
   }
-
 }

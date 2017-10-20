@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Animation, Letter, Color } from './../lib/lib';
+import { Animation, Letter, } from './../lib/lib';
 import { Router } from '@angular/router';
 import { VisitorService } from './../services/visitor.service';
+import { Color } from '../services/color.service';
 
 @Component({
   templateUrl: './gate-form.component.html',
@@ -14,7 +15,6 @@ export class GateFormComponent implements OnInit {
 
   private _displayMessage: string;
   private _code: string;
-  private _color: Color;
   private _inputDisabled: boolean;
 
   private _false_synonyms: string[] = [	'false', 'incorrect', 'untrue', 'wrong', 'erroneous', 'fallacious', 'faulty',
@@ -24,10 +24,9 @@ export class GateFormComponent implements OnInit {
   private _message: Letter[];
   private _nextAnimationSide: number;
 
-  constructor(private router: Router, private visitor: VisitorService) {
+  constructor(private _color: Color, private router: Router, private visitor: VisitorService) {
     this._message = new Array<Letter>();
     this._code = '';
-    this._color = new Color();
     this._inputDisabled = false;
     this._nextAnimationSide = 0;
   }
@@ -63,8 +62,8 @@ export class GateFormComponent implements OnInit {
   onClick() {
     const inp: HTMLElement = <HTMLElement>this.inp.nativeElement;
     const cnt: HTMLElement = <HTMLElement>this.cnt.nativeElement;
-    cnt.style.setProperty('--color', 'rgba' + this.color.generateRandomColor().toString());
-    inp.style.setProperty('--color-shadow', 'rgba' + this.color.generateRandomColor().toString());
+    cnt.style.setProperty('--color', this._color.generateRandomRbgColor());
+    inp.style.setProperty('--color-shadow', this._color.generateRandomRbgColor());
   }
 
   onMouseMove(event: MouseEvent) {
@@ -112,7 +111,5 @@ export class GateFormComponent implements OnInit {
   set inputDisabled(val: boolean) {
     this._inputDisabled = val;
   }
-  get color(): Color {
-    return this._color;
-  }
+
 }

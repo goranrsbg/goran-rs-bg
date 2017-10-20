@@ -14,6 +14,7 @@ import { CurriculumVitaeComponent } from './curriculum-vitae/curriculum-vitae.co
 import { CodeSamplesComponent } from './code-samples/code-samples.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
+import { Color } from './services/color.service';
 import { VisitorService } from './services/visitor.service';
 import { MainGuard } from './guards/main.guard';
 import { KeyInterceptor } from './interceptor/main-interceptor';
@@ -43,7 +44,8 @@ import { KeyInterceptor } from './interceptor/main-interceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: KeyInterceptor,
       multi: true,
-    }
+    },
+    Color
   ],
   bootstrap: [AppComponent]
 })
