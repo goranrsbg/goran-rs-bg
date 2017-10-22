@@ -42,7 +42,8 @@ nav a {
     border: 3px solid red;
 }
 nav a:hover {
-    font-size: 150%;
+    color: white;
+    background-color: red;
 }
 #cl {
     border-radius: 11px 0 0 11px;
@@ -50,7 +51,7 @@ nav a:hover {
 #cs {
     border-radius: 0 11px 11px 0;
 }
-.active-link {
+.active {
     color: black;
     font-weight: bold;
     background-color: white;

@@ -1,25 +1,10 @@
-div.container {
+div#wrapper {
+    width: 91%;
+    margin: auto;
     margin-top: 2em;
     -webkit-margin-before: 2em;
     margin-bottom: 2em;
     -webkit-margin-after: 2em;
-}
-table#tableTop {
-    width: 100%;
-    border: none;
-}
-table td.left {
-    width: 80%;
-    text-align: right;
-    padding-right: 7px;
-}
-table td.right {
-    text-align: left;
-}
-div#wrapper {
-    width: 91%;
-    margin: auto;
-    margin-bottom: 1.5em;
 }
 div p {
     text-indent: 23px;
