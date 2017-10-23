@@ -10,18 +10,21 @@
     grid-template-columns: 1fr 800px 1fr;
     grid-gap: 10px;
     grid-auto-rows: minmax(71px, auto);
+    grid-template-areas: 
+    "h h h"
+    "n n n"
+    "l a r"
+    "f f f";
 }
 header {
-    grid-column: 1 / 4;
-    grid-row: 1;
+    grid-area: h;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: var(--color, yellowgreen);
 }
 nav {
-    grid-column: 1 / 4;
-    grid-row: 2;
+    grid-area: n;
     background: url(../../assets/img/banner3.jpg);
     background-size: cover;
     background-repeat: no-repeat;
@@ -58,16 +61,18 @@ nav a:hover {
     border: 3px solid black;
 }
 aside.left {
-    grid-column: 1;
-    grid-row: 3;
+    grid-area: l;
 }
 aside.right {
-    grid-column: 3;
-    grid-row: 3;
+    grid-area: r;
+}
+canvas {
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
 }
 article {
-    grid-column: 2;
-    grid-row: 3;
+    grid-area: a;
     text-align: left;
     color: black;
     font-weight: 550;
@@ -75,8 +80,7 @@ article {
     min-height: 800px;
 }
 footer {
-    grid-column: 1 / 4;
-    grid-row: 4;
+    grid-area: f;
     border-top: 3px solid coral;
     border-bottom: 3px solid coral;
     font-size: 1em;
@@ -92,4 +96,20 @@ footer {
 footer span {
     background-color: rgba(1, 1, 1, 0.4);
     color: yellowgreen;
+}
+
+@media(max-width: 1245px) {
+    .wrapper {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: 800px;
+        grid-auto-rows: minmax(71px, auto);
+        grid-template-areas: 
+        "h"
+        "l"
+        "n"
+        "a"
+        "r"
+        "f";
+    }
 }

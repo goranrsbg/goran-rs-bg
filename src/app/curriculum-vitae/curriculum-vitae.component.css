@@ -16,7 +16,7 @@ table#personal {
     display: inline;
     vertical-align: center;
 }
-table#personal tr:hover {
+table tr:hover {
     background-color: #f2f2f2
 }
 table#personal td.left {
@@ -31,6 +31,19 @@ table a {
 }
 table a:hover {
     font-weight: bolder;
+}
+table#exp {
+    border: 3px solid black;
+    border-style: groove;
+    text-align: left;
+    border-collapse: collapse;
+}
+table#exp thead {
+    font-weight: bold;
+    border-bottom: 3px double #999999;
+}
+table#exp td {
+    padding: 7px;
 }
 hr { 
     display: block;

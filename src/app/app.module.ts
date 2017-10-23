@@ -15,6 +15,7 @@ import { CodeSamplesComponent } from './code-samples/code-samples.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 import { Color } from './services/color.service';
+import { SnakeGameService } from './services/snake-game.service';
 import { VisitorService } from './services/visitor.service';
 import { MainGuard } from './guards/main.guard';
 import { KeyInterceptor } from './interceptor/main-interceptor';
@@ -45,7 +46,8 @@ import { KeyInterceptor } from './interceptor/main-interceptor';
       useClass: KeyInterceptor,
       multi: true,
     },
-    Color
+    Color,
+    SnakeGameService
   ],
   bootstrap: [AppComponent]
 })
