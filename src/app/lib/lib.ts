@@ -86,3 +86,14 @@ export interface Data {
     name: string;
     askAndLearn: string;
 }
+
+export class Dimension {
+  constructor(private _width: number = 0, private _height: number = 0) {
+  }
+  get width(): number {
+    return this._width;
+  }
+  get height(): number {
+    return this._height;
+  }
+}

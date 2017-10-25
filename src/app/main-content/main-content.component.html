@@ -9,8 +9,16 @@
       <a id="cs" routerLink="code-samples" routerLinkActive="active" >Code samples</a>
     </div>
   </nav>
-  <aside id="left"><canvas id="leftSide"></canvas></aside>
-  <aside id="right"><canvas id="rightSide"></canvas></aside>
+  <aside id="left">
+    <canvas id="leftCanvas" (click)="onLeftCanvasClick($event)" #cleft>
+      Canvas not supported.
+    </canvas>
+  </aside>
+  <aside id="right">
+    <canvas id="rightCanvas" (click)="onRightCanvasClick($event)" #cright>
+      Canvas not supported.
+    </canvas>
+  </aside>
   <article>
     <router-outlet></router-outlet>
   </article>
