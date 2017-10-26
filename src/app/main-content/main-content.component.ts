@@ -15,18 +15,23 @@ export class MainContentComponent implements OnInit {
   constructor(private _color: Color, private theGame: SnakeGameService) { }
 
   ngOnInit() {
+    this.setTheGameSize();
+    this.theGame.turnOff();
+  }
+
+  setTheGameSize() {
     let e: HTMLCanvasElement;
     e = <HTMLCanvasElement>this.cleft.nativeElement;
     let box = e.getBoundingClientRect();
-
+    e.width = box.right - box.left;
+    e.height = box.bottom - box.top;
     this.theGame.setLeftSide(box.right - box.left, box.bottom - box.top, e);
 
     e = <HTMLCanvasElement>this.cright.nativeElement;
     box = e.getBoundingClientRect();
-
+    e.width = box.right - box.left;
+    e.height = box.bottom - box.top;
     this.theGame.setRightSide(box.right - box.left, box.bottom - box.top, e);
-
-    this.theGame.turnOff();
   }
 
   onClick() {

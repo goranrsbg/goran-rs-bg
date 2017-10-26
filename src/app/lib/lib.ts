@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 
 export class Animation {
   private static instances = new Array<Animation>();
@@ -71,7 +70,7 @@ export class Letter {
   static side: number;
   static lastPosition: number;
 
-  constructor(private _sign: string, private _postion: number){}
+  constructor(private _sign: string, private _postion: number) {}
 
   get sign(): string {
       return this._sign;
@@ -95,5 +94,58 @@ export class Dimension {
   }
   get height(): number {
     return this._height;
+  }
+}
+
+export class GameObject {
+  public static r: number;
+  constructor(public pos: Vector2D, private left: boolean) {}
+  isLeft() {
+    return this.left;
+  }
+  changeSide() {
+    this.left = !this.left;
+  }
+}
+
+export class Vector2D {
+  private x: number;
+  private y: number;
+  constructor(x: number = 0, y: number = 0) {
+    this.x = x;
+    this.y = -y;
+  }
+  get X(): number {
+    return this.x;
+  }
+  get Y(): number {
+    return -this.y;
+  }
+  add(v: Vector2D) {
+    this.x += v.x;
+    this.y += v.y;
+  }
+  sub(v: Vector2D) {
+    this.x -= v.x;
+    this.y -= v.y;
+  }
+  mag(): number {
+    return Math.sqrt(this.x * this.x + this.y * this.y);
+  }
+  scale(n: number) {
+    this.x *= n;
+    this.y *= n;
+  }
+  normalize() {
+    this.scale(1 / this.mag());
+  }
+  limit(n: number) {
+    if (this.mag() > n) {
+      this.scale(n / this.mag());
+    }
+  }
+  moveTo(x: number, y: number) {
+    this.x = x;
+    this.y = -y;
   }
 }
