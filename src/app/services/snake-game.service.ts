@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Dimension, GameObject, Vector2D } from './../lib/lib';
+import { Dimension, GameMovingObject, Vector2D } from './../lib/lib';
 
 @Injectable()
 export class SnakeGameService {
@@ -15,7 +15,11 @@ export class SnakeGameService {
   private FPS = 60;
   private insideLeft: boolean;
 
-  private objects = Array<GameObject>();
+  private snake = Array<GameMovingObject>();
+  private collectible = Array();
+  private walls = Array();
+
+  private v: Vector2D;
 
   constructor() { }
 
@@ -40,6 +44,13 @@ export class SnakeGameService {
       this.insideLeft = true;
       this.init();
     } else {
+      if (this.snake[0].isLeft()) {
+        console.log(x + ' ' + y);
+        this.v.goto(x, y);
+        this.v.sub(this.snake[0].v_position);
+        this.v.normalize();
+        this.snake[0].v_direction.gotov(this.v);
+      }
       this.start();
     }
   }
@@ -50,24 +61,31 @@ export class SnakeGameService {
       this.insideLeft = false;
       this.init();
     } else {
+      if (this.snake[0].isRight()) {
+        console.log(x + ' ' + y);
+        this.v.goto(x, y);
+        this.v.sub(this.snake[0].v_position);
+        this.v.normalize();
+        this.snake[0].v_direction.gotov(this.v);
+      }
       this.start();
     }
   }
   init() {
     this.off = false;
+    this.v = new Vector2D();
     this.clear();
     console.log('now create circles and draw all...');
     // create objects class with position, size for start
-    GameObject.r = 30;
-    this.objects.push(new GameObject(new Vector2D(this.lsize.width / 2, this.lsize.height / 2), this.insideLeft));
+    this.snake.push(new GameMovingObject(new Vector2D(this.lsize.width / 2, this.lsize.height / 2),
+                                          new Vector2D(0, 0), 1, 30, this.insideLeft));
     this.draw();
   }
 
   // start game
   start() {
-    console.log('starting...');
-    console.log(this.lsize.width + ' ' + this.lsize.height);
-    console.log(this.rsize.width + ' ' + this.rsize.height);
+    console.log('moving...');
+    console.log(this.snake[0].v_direction.X + ' ' + this.snake[0].v_direction.Y);
   }
   // main method
   run() {
@@ -77,17 +95,16 @@ export class SnakeGameService {
   }
   // just draw all objects in the game...
   draw() {
-    let e: GameObject;
-    for (let i = 0; i < this.objects.length; i++) {
-      e = this.objects[i];
-      console.log(e);
+    console.log(this.snake);
+    for (let i = 0; i < this.snake.length; i++) {
+      const e = this.snake[i];
       if (e.isLeft()) {
         this.ctx_left.fillStyle = 'black';
-        this.ctx_left.arc(e.pos.X, e.pos.Y, GameObject.r, 0, 2 * Math.PI);
+        this.ctx_left.arc(e.v_position.X, e.v_position.Y, e.R, 0, 2 * Math.PI);
         this.ctx_left.fill();
       } else {
-        this.ctx_right.fillStyle = 'black';
-        this.ctx_right.arc(e.pos.X, e.pos.Y, GameObject.r, 0, 2 * Math.PI);
+        this.ctx_right.fillStyle = 'blue';
+        this.ctx_right.arc(e.v_position.X, e.v_position.Y, e.R, 0, 2 * Math.PI);
         this.ctx_right.fill();
       }
     }

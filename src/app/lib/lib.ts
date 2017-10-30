@@ -97,14 +97,28 @@ export class Dimension {
   }
 }
 
-export class GameObject {
-  public static r: number;
-  constructor(public pos: Vector2D, private left: boolean) {}
+export class GameMovingObject {
+  constructor(public v_position: Vector2D, public v_direction: Vector2D, private speed: number, private r: number, private side: boolean) {}
+  move() {
+    this.v_position.add(this.v_direction.scale(this.speed));
+  }
+  changeSpeed(v: number) {
+    this.speed += v;
+  }
+  changeR(n: number) {
+    this.r += n;
+  }
   isLeft() {
-    return this.left;
+    return this.side;
+  }
+  isRight() {
+    return !this.side;
+  }
+  get R(): number {
+    return this.r;
   }
   changeSide() {
-    this.left = !this.left;
+    this.side = !this.side;
   }
 }
 
@@ -113,13 +127,13 @@ export class Vector2D {
   private y: number;
   constructor(x: number = 0, y: number = 0) {
     this.x = x;
-    this.y = -y;
+    this.y = y;
   }
   get X(): number {
     return this.x;
   }
   get Y(): number {
-    return -this.y;
+    return this.y;
   }
   add(v: Vector2D) {
     this.x += v.x;
@@ -132,20 +146,30 @@ export class Vector2D {
   mag(): number {
     return Math.sqrt(this.x * this.x + this.y * this.y);
   }
-  scale(n: number) {
+  mag2(): number {
+    return this.x * this.x + this.y * this.y;
+  }
+  scale(n: number): this {
     this.x *= n;
     this.y *= n;
+    return this;
   }
   normalize() {
-    this.scale(1 / this.mag());
+    if (this.mag() !== 0) {
+      this.scale(1 / this.mag());
+    }
   }
   limit(n: number) {
     if (this.mag() > n) {
       this.scale(n / this.mag());
     }
   }
-  moveTo(x: number, y: number) {
+  goto(x: number, y: number) {
     this.x = x;
-    this.y = -y;
+    this.y = y;
+  }
+  gotov(v: Vector2D) {
+    this.x = v.X;
+    this.y = v.Y;
   }
 }
