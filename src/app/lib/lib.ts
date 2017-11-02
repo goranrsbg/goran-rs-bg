@@ -19,6 +19,30 @@ export class Animation {
     }
   }
 
+  private static ontick() {
+    if (Animation.instances.length > 0) {
+      Animation.instances.forEach(function(e: Animation) {
+        e.tick();
+      });
+    } else {
+      Animation.stopAnimations();
+    }
+  }
+
+  static startAnimations() {
+    Animation._timer_id = setInterval(Animation.ontick, Animation.UPDATE);
+  }
+
+  static stopAnimations() {
+    clearInterval(Animation._timer_id);
+    Animation.instances.length = 0;
+    Animation._timer_id = false;
+  }
+
+  static isRunning(): boolean {
+    return Animation._timer_id !== false;
+  }
+
   private tick() {
 
     this._ticks_delay--;
@@ -38,31 +62,6 @@ export class Animation {
 
   }
 
-  // tslint:disable-next-line:member-ordering
-  private static ontick() {
-    if (Animation.instances.length > 0) {
-      Animation.instances.forEach(function(e: Animation) {
-        e.tick();
-      });
-    } else {
-      Animation.stopAnimations();
-    }
-  }
-
-  // tslint:disable-next-line:member-ordering
-  static startAnimations() {
-    Animation._timer_id = setInterval(Animation.ontick, Animation.UPDATE);
-  }
-  // tslint:disable-next-line:member-ordering
-  static stopAnimations() {
-    clearInterval(Animation._timer_id);
-    Animation.instances.length = 0;
-    Animation._timer_id = false;
-  }
-  // tslint:disable-next-line:member-ordering
-  static isRunning(): boolean {
-    return Animation._timer_id !== false;
-  }
 }
 
 export class Letter {
@@ -167,9 +166,5 @@ export class Vector2D {
   goto(x: number, y: number) {
     this.x = x;
     this.y = y;
-  }
-  gotov(v: Vector2D) {
-    this.x = v.X;
-    this.y = v.Y;
   }
 }
