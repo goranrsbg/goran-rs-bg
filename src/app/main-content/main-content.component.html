@@ -10,12 +10,12 @@
     </div>
   </nav>
   <aside id="left">
-    <canvas (window:resize)="setTheGameSize()" id="leftCanvas" (click)="onLeftCanvasClick($event)" #cleft>
+    <canvas (window:resize)="setTheGameSize()" id="leftCanvas" (click)="onCanvasClick($event)" #cleft>
       Canvas not supported.
     </canvas>
   </aside>
   <aside id="right">
-    <canvas id="rightCanvas" (click)="onRightCanvasClick($event)" #cright>
+    <canvas id="rightCanvas" (click)="onCanvasClick($event)" #cright>
       Canvas not supported.
     </canvas>
   </aside>
@@ -28,4 +28,3 @@
     </div>
   </footer>
 </div>
-

@@ -1,3 +1,4 @@
+import { Color } from './../services/color.service';
 
 export class Animation {
   private static instances = new Array<Animation>();
@@ -97,7 +98,8 @@ export class Dimension {
 }
 
 export class GameMovingObject {
-  constructor(public v_position: Vector2D, public v_direction: Vector2D, private speed: number, private r: number, private side: boolean) {}
+  constructor(public v_position: Vector2D, public v_direction: Vector2D, private speed: number,
+              private r: number, private _side: boolean, private _color: string) {}
   move() {
     this.v_position.add(this.v_direction.scale(this.speed));
   }
@@ -107,17 +109,17 @@ export class GameMovingObject {
   changeR(n: number) {
     this.r += n;
   }
-  isLeft() {
-    return this.side;
-  }
-  isRight() {
-    return !this.side;
+  get side() {
+    return this._side;
   }
   get R(): number {
     return this.r;
   }
+  get color(): string {
+    return this._color;
+  }
   changeSide() {
-    this.side = !this.side;
+    this._side = !this._side;
   }
 }
 
@@ -166,5 +168,112 @@ export class Vector2D {
   goto(x: number, y: number) {
     this.x = x;
     this.y = y;
+  }
+}
+
+export class Game {
+
+  static theGameInstance: Game;
+  static timerId: any;
+  static FPS = 60;
+
+  private dimension: Dimension;
+  private ctx_left: CanvasRenderingContext2D;
+  private ctx_right: CanvasRenderingContext2D;
+
+  private snake = Array<GameMovingObject>();
+  private collectible = Array();
+  private walls = Array();
+
+  constructor(private _color: Color) {
+    Game.timerId = false;
+    Game.theGameInstance = this;
+  }
+
+  // start game
+  static start() {
+    Game.timerId = setInterval(() => { Game.theGameInstance.run(); }, 1000 / Game.FPS);
+    console.log('moving... ' + this.timerId);
+  }
+  static stopTheGame() {
+    clearInterval(Game.timerId);
+    Game.timerId = false;
+  }
+  static isRunning(): boolean {
+    return Game.timerId !== false;
+  }
+  setLeftSide(width: number, height: number, e: HTMLCanvasElement) {
+    this.dimension = new Dimension(width, height);
+    this.ctx_left = e.getContext('2d');
+  }
+  setRightSide(e: HTMLCanvasElement) {
+    this.ctx_right = e.getContext('2d');
+  }
+  gameOver() {
+    Game.stopTheGame();
+    this.ctx_left.clearRect(0, 0, this.dimension.width, this.dimension.height);
+    this.ctx_right.clearRect(0, 0, this.dimension.width, this.dimension.height);
+    this.clear('rgba(0,0,0,0)');
+  }
+  init(side: boolean) {
+    console.log('now create circles and draw all...');
+    // create objects class with position, size for start
+    this.snake.push(new GameMovingObject(new Vector2D(this.dimension.width / 2, this.dimension.height / 2),
+                                         new Vector2D(0, 0), 1, 30, side, this._color.generateRandomRbgColor()));
+    Game.start();
+  }
+  move(x: number, y: number, side: boolean) {
+    if (Game.isRunning()) {
+      if (this.snake[0].side === side) {
+        console.log(x + ' ' + y);
+        this.snake[0].v_direction.goto(x, y);
+        this.snake[0].v_direction.sub(this.snake[0].v_position);
+        this.snake[0].v_direction.normalize();
+        console.log(this.snake[0].v_direction.X + ' ' + this.snake[0].v_direction.Y);
+      }
+    }
+  }
+  // main method
+  run() {
+    this.clear('white');
+    this.update();
+    this.draw();
+  }
+  // just draw all objects in the game...
+  draw() {
+    // console.log(this.snake);
+    for (let i = 0; i < this.snake.length; i++) {
+      const e = this.snake[i];
+      if (e.side) {
+        this.ctx_left.beginPath();
+        this.ctx_left.fillStyle = e.color;
+        this.ctx_left.arc(e.v_position.X, e.v_position.Y, e.R, 0, 2 * Math.PI);
+        this.ctx_left.fill();
+        this.ctx_left.closePath();
+      } else {
+        this.ctx_right.beginPath();
+        this.ctx_right.fillStyle = e.color;
+        this.ctx_right.arc(e.v_position.X, e.v_position.Y, e.R, 0, 2 * Math.PI);
+        this.ctx_right.fill();
+        this.ctx_right.closePath();
+      }
+    }
+  }
+  // prepare new positions...
+  update() {
+    for (let i = 0; i < this.snake.length; i++) {
+       this.snake[i].move();
+    }
+  }
+  // repaint canvas with color...
+  clear(color: string) {
+    this.ctx_left.beginPath();
+    this.ctx_left.fillStyle = color;
+    this.ctx_left.fillRect(0, 0, this.dimension.width, this.dimension.height);
+    this.ctx_left.closePath();
+    this.ctx_right.beginPath();
+    this.ctx_right.fillStyle = color;
+    this.ctx_right.fillRect(0, 0, this.dimension.width, this.dimension.height);
+    this.ctx_right.closePath();
   }
 }
