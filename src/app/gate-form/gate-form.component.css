@@ -1,3 +1,11 @@
+:root {
+    --x: ;
+    --y: ;
+    --x-pos: ;
+    --y-pos: ;
+    --color-shadow: ;
+    --color: ;
+}
 .input-container {
     position: absolute;
     top: 50%;

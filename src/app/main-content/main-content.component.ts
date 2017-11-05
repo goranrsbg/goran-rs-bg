@@ -24,12 +24,15 @@ export class MainContentComponent implements OnInit {
   setTheGameSize() {
     let e: HTMLCanvasElement;
     e = <HTMLCanvasElement>this.cleft.nativeElement;
-    const box = e.getBoundingClientRect();
+    let box = e.getBoundingClientRect();
     e.width = box.right - box.left;
     e.height = box.bottom - box.top;
-    this.theGame.setLeftSide(box.right - box.left, box.bottom - box.top, e);
+    this.theGame.setLeftSide(e.width, e.height, e);
 
     e = <HTMLCanvasElement>this.cright.nativeElement;
+    box = e.getBoundingClientRect();
+    e.width = box.right - box.left;
+    e.height = box.bottom - box.top;
     this.theGame.setRightSide(e);
   }
 

@@ -1,3 +1,7 @@
+:root {
+    --value: ;
+    --angle: ;
+}
 div.container {
     font-size: 2em;
     letter-spacing: 11px;

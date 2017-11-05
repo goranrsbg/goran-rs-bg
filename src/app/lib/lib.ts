@@ -97,7 +97,7 @@ export class Dimension {
   }
 }
 
-export class GameMovingObject {
+export class GameObject {
   constructor(public v_position: Vector2D, public v_direction: Vector2D, private speed: number,
               private r: number, private _side: boolean, private _color: string) {}
   move() {
@@ -109,6 +109,9 @@ export class GameMovingObject {
   changeR(n: number) {
     this.r += n;
   }
+  changeSide() {
+    this._side = !this._side;
+  }
   get side() {
     return this._side;
   }
@@ -117,9 +120,6 @@ export class GameMovingObject {
   }
   get color(): string {
     return this._color;
-  }
-  changeSide() {
-    this._side = !this._side;
   }
 }
 
@@ -135,6 +135,12 @@ export class Vector2D {
   }
   get Y(): number {
     return this.y;
+  }
+  set X(x: number) {
+    this.x = x;
+  }
+  set Y(y: number) {
+    this.y = y;
   }
   add(v: Vector2D) {
     this.x += v.x;
@@ -181,13 +187,16 @@ export class Game {
   private ctx_left: CanvasRenderingContext2D;
   private ctx_right: CanvasRenderingContext2D;
 
-  private snake = Array<GameMovingObject>();
-  private collectible = Array();
-  private walls = Array();
+  private snake = Array<GameObject>();
+  private collectible = Array<GameObject>();
+  private walls = Array<GameObject>();
+
+  private pom: GameObject;
 
   constructor(private _color: Color) {
     Game.timerId = false;
     Game.theGameInstance = this;
+    this.pom = new GameObject(new Vector2D(), null, 0, 0, true, 'none');
   }
 
   // start game
@@ -215,22 +224,43 @@ export class Game {
     this.ctx_right.clearRect(0, 0, this.dimension.width, this.dimension.height);
     this.clear('rgba(0,0,0,0)');
   }
+  isOutside(v: Vector2D): boolean {
+    return v.X < 0 || v.Y < 0 || v.X > this.dimension.width || v.Y > this.dimension.height;
+  }
+  // calculate reflection for object inside canvas
+  reflect(e: GameObject) {
+    const v = e.v_position;
+    if (v.X < 0) {
+      v.X += this.dimension.width;
+      if (!e.side) { e.changeSide(); }
+    } else if (v.X > this.dimension.width) {
+      v.X -= this.dimension.width;
+      if (e.side) { e.changeSide(); }
+    } else {
+      v.X = this.dimension.width - v.X;
+    }
+    if (v.Y < 0) {
+      v.Y += this.dimension.height;
+    } else if (v.Y > this.dimension.height) {
+      v.Y -= this.dimension.height;
+    } else {
+      v.Y = this.dimension.height - v.Y;
+    }
+  }
   init(side: boolean) {
     console.log('now create circles and draw all...');
     // create objects class with position, size for start
-    this.snake.push(new GameMovingObject(new Vector2D(this.dimension.width / 2, this.dimension.height / 2),
-                                         new Vector2D(0, 0), 1, 30, side, this._color.generateRandomRbgColor()));
+    this.snake.push(new GameObject(new Vector2D(this.dimension.width / 2, this.dimension.height / 2),
+                                   new Vector2D(0, 0), 1, 30, side, this._color.generateRandomRbgColor()));
     Game.start();
   }
   move(x: number, y: number, side: boolean) {
-    if (Game.isRunning()) {
-      if (this.snake[0].side === side) {
-        console.log(x + ' ' + y);
-        this.snake[0].v_direction.goto(x, y);
-        this.snake[0].v_direction.sub(this.snake[0].v_position);
-        this.snake[0].v_direction.normalize();
-        console.log(this.snake[0].v_direction.X + ' ' + this.snake[0].v_direction.Y);
-      }
+    if (this.snake[0].side === side) {
+      console.log(x + ' ' + y);
+      this.snake[0].v_direction.goto(x, y);
+      this.snake[0].v_direction.sub(this.snake[0].v_position);
+      this.snake[0].v_direction.normalize();
+      console.log(this.snake[0].v_direction.X + ' ' + this.snake[0].v_direction.Y);
     }
   }
   // main method
@@ -241,31 +271,36 @@ export class Game {
   }
   // just draw all objects in the game...
   draw() {
-    // console.log(this.snake);
+    // shadow reflection here
     for (let i = 0; i < this.snake.length; i++) {
-      const e = this.snake[i];
-      if (e.side) {
-        this.ctx_left.beginPath();
-        this.ctx_left.fillStyle = e.color;
-        this.ctx_left.arc(e.v_position.X, e.v_position.Y, e.R, 0, 2 * Math.PI);
-        this.ctx_left.fill();
-        this.ctx_left.closePath();
-      } else {
-        this.ctx_right.beginPath();
-        this.ctx_right.fillStyle = e.color;
-        this.ctx_right.arc(e.v_position.X, e.v_position.Y, e.R, 0, 2 * Math.PI);
-        this.ctx_right.fill();
-        this.ctx_right.closePath();
+      this.drawE(this.snake[i]);
+    }
+  }
+  drawE(e: GameObject) {
+    if (e.side) {
+      this.ctx_left.beginPath();
+      this.ctx_left.fillStyle = e.color;
+      this.ctx_left.arc(e.v_position.X, e.v_position.Y, e.R, 0, 2 * Math.PI);
+      this.ctx_left.fill();
+      this.ctx_left.closePath();
+    } else {
+      this.ctx_right.beginPath();
+      this.ctx_right.fillStyle = e.color;
+      this.ctx_right.arc(e.v_position.X, e.v_position.Y, e.R, 0, 2 * Math.PI);
+      this.ctx_right.fill();
+      this.ctx_right.closePath();
+    }
+  }
+  // prepare new positions... move to reflection position snake head if outside of the map...
+  update() {
+    for (let i = 0; i < this.snake.length; i++) {
+      this.snake[i].move();
+      if (this.isOutside(this.snake[i].v_position)) {
+        this.reflect(this.snake[i]);
       }
     }
   }
-  // prepare new positions...
-  update() {
-    for (let i = 0; i < this.snake.length; i++) {
-       this.snake[i].move();
-    }
-  }
-  // repaint canvas with color...
+  // clear canvas with color...
   clear(color: string) {
     this.ctx_left.beginPath();
     this.ctx_left.fillStyle = color;

@@ -5,6 +5,9 @@
     text-align: center;
     font-family: "Oxygen", sans-serif;
 }
+:root {
+    --color: yellowgreen;
+}
 .wrapper {
     display: grid;
     grid-template-columns: 1fr 800px 1fr;
