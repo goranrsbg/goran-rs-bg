@@ -121,6 +121,15 @@ export class GameObject {
   get color(): string {
     return this._color;
   }
+  set side(side: boolean) {
+    this._side = side;
+  }
+  set R(r: number) {
+    this.r = r;
+  }
+  set color(color: string) {
+    this._color = color;
+  }
 }
 
 export class Vector2D {
@@ -227,6 +236,10 @@ export class Game {
   isOutside(v: Vector2D): boolean {
     return v.X < 0 || v.Y < 0 || v.X > this.dimension.width || v.Y > this.dimension.height;
   }
+  isCloseToEdge(e: GameObject): boolean {
+    const v = e.v_position;
+    return this.dimension.width - v.X < e.R || v.X < e.R || this.dimension.height - v.Y < e.R || v.Y < e.R;
+  }
   // calculate reflection for object inside canvas
   reflect(e: GameObject) {
     const v = e.v_position;
@@ -245,6 +258,26 @@ export class Game {
       v.Y -= this.dimension.height;
     } else {
       v.Y = this.dimension.height - v.Y;
+    }
+  }
+  shadow(e: GameObject) {
+    const v = e.v_position;
+    const u = this.pom.v_position;
+    if (v.X < e.R) {
+      u.X = v.X + this.dimension.width;
+      if (!e.side) { this.pom.changeSide(); }
+    } else if (this.dimension.width - v.X < e.R) {
+      u.X = v.X - this.dimension.width;
+      if (e.side) { this.pom.changeSide(); }
+    } else {
+      u.X = this.dimension.width - v.X;
+    }
+    if (v.Y < e.R) {
+      u.Y = v.Y + this.dimension.height;
+    } else if (this.dimension.height - v.Y < e.R) {
+      u.Y = v.Y - this.dimension.height;
+    } else {
+      u.Y = this.dimension.height - v.Y;
     }
   }
   init(side: boolean) {
@@ -273,7 +306,15 @@ export class Game {
   draw() {
     // shadow reflection here
     for (let i = 0; i < this.snake.length; i++) {
-      this.drawE(this.snake[i]);
+      const e = this.snake[i];
+      this.drawE(e);
+      if (this.isCloseToEdge(e)) {
+        this.pom.side = e.side;
+        this.pom.R = e.R;
+        this.pom.color = e.color;
+        this.shadow(e);
+        this.drawE(this.pom);
+      }
     }
   }
   drawE(e: GameObject) {
