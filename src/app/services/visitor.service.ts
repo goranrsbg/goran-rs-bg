@@ -15,7 +15,7 @@ export class VisitorService {
 
   constructor(private http: HttpClient) {
     this._isValid = false;
-    this._url = 'http://localhost:8080/eebackend/validate/code';
+    this._url = 'http://skynet-goranrsbg.1d35.starter-us-east-1.openshiftapps.com/eebackend/validate/code';
   }
 
   logIn(code: string): Observable<boolean> {

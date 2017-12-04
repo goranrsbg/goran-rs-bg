@@ -8,7 +8,6 @@ export class KeyInterceptor implements HttpInterceptor {
 
         const cpyreq = req.clone({headers: req.headers.set('authorization', 'r2-d2aNdC-3pO'),
                                   url:     req.url.replace('eebackend', 'skynet')});
-        // console.log(cpyreq);
         return next.handle(cpyreq);
     }
 }
